@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #00192f;
+  background-color: #000000;
   font-family: "Open Sans", sans-serif;
 }
 
@@ -23,7 +23,7 @@ body {
   max-width: 100%;
   height: 60px;
   /* background-color: #058107; Green color */
-  background-color: rgb(34, 91, 247);
+  background-color: rgb(185, 48, 48);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.5);
   padding: 10px;
   position: fixed;
@@ -57,4 +57,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* Styles for mobile screens */
+@media screen and (max-width: 767px) {
+  .app-heading {
+    display: none;
+  }
 }
