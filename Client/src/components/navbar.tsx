@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <Stack direction="row" spacing={2}>
-        <h1 className="app-heading">Looffyy</h1>
+        <h1 className="app-heading">Loooffyy</h1>
         <img className="Logo" src="../../public/logo.png" alt="Looffyy Logo" />
       </Stack>
 
