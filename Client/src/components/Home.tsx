@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid, Container } from "@mui/material";
+import { Grid } from "@mui/material";
+import Carousel from "react-material-ui-carousel";
 
 /**
  * https://kitsu.io/api/edge/
@@ -17,6 +18,7 @@ const ANILIST_URL = "https://graphql.anilist.co";
 const BASE_URL = "https://kitsu.io/api/edge";
 const JIKAN_URL = "https://api.jikan.moe/v4";
 const QUOTES_URL = "https://animechan.xyz/api/quotes/anime?title=one%20piece";
+const ANIAPI = "https://api.aniapi.com/v1";
 
 const query = `
 query ($id: Int) { # Define which variables will be used in the query (id)
@@ -53,18 +55,23 @@ const Home = () => {
   //Render LOGIC
 
   //Set Quote Render Quote and ask user if they know the character that made this quote
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState([]);
   const [data, setData] = useState([]);
   const [quote, setQuote] = useState();
+
+  //image_url
+  // large_image_url
+  //small_image_url
 
   async function getJikanData() {
     // const anime_id = 1;
     const response = await fetch(`https://api.jikan.moe/v4/top/anime`);
+    // const response = await fetch("https://api.aniapi.com/1");
     if (response.ok) {
       const data = await response.json();
-      console.log(data.data[0].images);
+      console.log(data);
 
-      setData(data.data.map((e) => e.images.jpg.image_url));
+      setImage(data.data.map((e) => e.images.jpg.large_image_url));
     }
   }
 
@@ -76,54 +83,54 @@ const Home = () => {
     }
   }
 
-  async function getAnimeData() {
-    const response = await fetch(ANILIST_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        query: query,
-        variables: variables,
-      }),
-    });
+  // async function getAnimeData() {
+  //   const response = await fetch(ANILIST_URL, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       query: query,
+  //       variables: variables,
+  //     }),
+  //   });
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-    } else {
-      console.log("Error In Request");
-    }
-  }
-
-  // async function fetchAnime() {
-  //   try {
-  //     // Make a GET request to fetch anime data
-  //     const response = await axios.get(`${BASE_URL}/anime`, {
-  //       params: {
-  //         "filter[categories]": "adventure",
-  //         "page[limit]": 10,
-  //       },
-  //       headers: {
-  //         Accept: "application/vnd.api+json",
-  //         "Content-Type": "application/vnd.api+json",
-  //       },
-  //     });
-
-  //     console.log(response.data.data);
-  //     setData(response.data.data);
-  //     setImage(response.data.data[0].attributes.coverImage.large);
-  //   } catch (error) {
-  //     console.error("Error fetching anime:", error);
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     console.log(data);
+  //   } else {
+  //     console.log("Error In Request");
   //   }
   // }
 
+  async function fetchAnime() {
+    try {
+      // Make a GET request to fetch anime data
+      const response = await axios.get(`${BASE_URL}/anime`, {
+        params: {
+          "filter[categories]": "adventure",
+          "page[limit]": 10,
+        },
+        headers: {
+          Accept: "application/vnd.api+json",
+          "Content-Type": "application/vnd.api+json",
+        },
+      });
+
+      console.log(response.data.data);
+      // setData(response.data.data);
+      setData(response.data.data.map((e) => e.attributes.coverImage.large));
+    } catch (error) {
+      console.error("Error fetching anime:", error);
+    }
+  }
+
   useEffect(() => {
     // getAnimeData();
-    getQuotedata();
+    // getQuotedata();
     getJikanData();
-    // fetchAnime();
+    fetchAnime();
   }, []);
 
   //###############################################################################################################################################################
@@ -131,12 +138,41 @@ const Home = () => {
 
   return (
     <div>
-      <Container></Container>
-      <Grid direction="row" justifyContent="flex-start" alignItems="flex-start">
-        <Grid item xs={6} md={8}>
-          {data
-            ? data.map((e, i) => {
-                return <img key={i} src={`${e}`} alt="" />;
+      <Carousel
+        className="Carousel"
+        swipe={true}
+        stopAutoPlayOnHover={false}
+        autoPlay={true}
+        indicators={false}
+        animation="fade"
+        cycleNavigation={true}
+        duration={300}
+      >
+        {data
+          ? data.map((e, i) => {
+              return <img key={i} src={`${e}`} alt="" />;
+            })
+          : null}
+      </Carousel>
+      <Grid
+        container
+        id="Container"
+        spacing={2}
+        direction="row"
+        justifyContent="flex-start"
+      >
+        <Grid item xs={6} spacing={3}>
+          {" "}
+          {image
+            ? image.map((e, i) => {
+                return (
+                  <img
+                    className="AnimeImages"
+                    key={i}
+                    src={`${e}`}
+                    alt="Anime"
+                  />
+                );
               })
             : null}
         </Grid>

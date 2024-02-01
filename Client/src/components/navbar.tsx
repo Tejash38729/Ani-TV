@@ -1,5 +1,5 @@
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import { Search } from "lucide-react";
 
 const Navbar = () => {
   return (
@@ -15,9 +15,8 @@ const Navbar = () => {
           className="search-bar"
           placeholder="Enter Anime Name"
         />
-        <Button variant="contained" color="error">
-          Search
-        </Button>
+
+        <Search className="Searchbutton" />
       </Stack>
     </nav>
   );
