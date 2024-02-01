@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Grid, Container } from "@mui/material";
 
 /**
  * https://kitsu.io/api/edge/
@@ -15,6 +16,7 @@ import axios from "axios";
 const ANILIST_URL = "https://graphql.anilist.co";
 const BASE_URL = "https://kitsu.io/api/edge";
 const JIKAN_URL = "https://api.jikan.moe/v4";
+const QUOTES_URL = "https://animechan.xyz/api/quotes/anime?title=one%20piece";
 
 const query = `
 query ($id: Int) { # Define which variables will be used in the query (id)
@@ -50,14 +52,24 @@ type elementData = {
 const Home = () => {
   //Render LOGIC
 
+  //Set Quote Render Quote and ask user if they know the character that made this quote
   const [image, setImage] = useState("");
   const [data, setData] = useState([]);
+  const [quote, setQuote] = useState();
 
   async function getJikanData() {
-    const anime_id = 1;
-    const response = await fetch(
-      `https://api.jikan.moe/v4/anime/${anime_id}/full`
-    );
+    // const anime_id = 1;
+    const response = await fetch(`https://api.jikan.moe/v4/top/anime`);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data.data[0].images);
+
+      setData(data.data.map((e) => e.images.jpg.image_url));
+    }
+  }
+
+  async function getQuotedata() {
+    const response = await fetch(QUOTES_URL);
     if (response.ok) {
       const data = await response.json();
       console.log(data);
@@ -109,7 +121,7 @@ const Home = () => {
 
   useEffect(() => {
     // getAnimeData();
-
+    getQuotedata();
     getJikanData();
     // fetchAnime();
   }, []);
@@ -119,14 +131,16 @@ const Home = () => {
 
   return (
     <div>
-      {/* <img src={`${image}`} alt="Background" />
-      {data
-        ? data.map((e: elementData, i) => {
-            return (
-              <img key={i} src={`${e.attributes?.coverImage?.large}`} alt="" />
-            );
-          })
-        : null} */}
+      <Container></Container>
+      <Grid direction="row" justifyContent="flex-start" alignItems="flex-start">
+        <Grid item xs={6} md={8}>
+          {data
+            ? data.map((e, i) => {
+                return <img key={i} src={`${e}`} alt="" />;
+              })
+            : null}
+        </Grid>
+      </Grid>
     </div>
   );
 };

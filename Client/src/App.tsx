@@ -9,6 +9,7 @@ function App() {
       <Container>
         <main>
           <Navbar />
+
           <Home />
         </main>
       </Container>

@@ -10,7 +10,11 @@ const Navbar = () => {
       </Stack>
 
       <Stack direction="row" spacing={2}>
-        <input type="text" className="search-bar" placeholder="Search..." />
+        <input
+          type="text"
+          className="search-bar"
+          placeholder="Enter Anime Name"
+        />
         <Button variant="contained" color="error">
           Search
         </Button>
