@@ -45,38 +45,80 @@ body {
   justify-content: space-between;
 }
 
-#Container {
+.Container {
   padding: 0;
   width: 100%;
   height: 100%;
 
-  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+  margin-top: 20px;
 }
 
+.Container h1 {
+  font-weight: 500;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.AnimeImages {
+  width: 100%;
+  margin-top: 4px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.AnimeImages:hover {
+  transform: scale(1.05);
+  opacity: 0.4;
+}
+
+/* Style for the anime search bar */
 .search-bar {
-  width: 200px;
+  width: 200px; /* Adjust width as needed */
   height: 34px;
-  border: 2px solid #0f0d17;
-  box-shadow: -5px 4px 2px 2px black;
   padding: 8px;
+  border: 2px solid #0f0d17; /* Border color */
   border-radius: 2px;
-  margin-right: 10px;
   font-weight: 500;
   outline: none;
+  background-color: #1c1c1e; /* Background color */
+  color: #ffffff; /* Text color */
+  box-shadow: -5px 4px 2px 2px black; /* Box shadow */
 }
 
 .search-bar::placeholder {
-  color: #0f0d17;
-  font-family: sans-serif;
-  font-weight: 500;
-  border: none;
+  color: #6b6b6b; /* Placeholder color */
+}
+
+.search-bar:focus {
+  border-color: #8a8a8a; /* Border color on focus */
 }
 
 .Carousel {
   width: 100%;
   height: 100%;
 
-  margin: 56px auto;
+  margin: 0 auto;
+  margin-top: 56px;
+}
+
+h1 {
+  color: white;
+}
+
+.loader {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%);
+  transform: translateY(-50%);
+  margin: 0 auto;
 }
 
 .Carousel img {
@@ -84,7 +126,7 @@ body {
   object-position: center;
   image-rendering: crisp-edges;
   image-resolution: 3600dpi;
-
+  opacity: 0.7;
   width: 100%;
   height: 100%;
   min-height: 500px;
