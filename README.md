@@ -1,4 +1,5 @@
-![image](https://github.com/Pythonwithsean/Loooffyy-Anime-Streaming-Website/assets/107402787/6d70a9ea-e6d5-4838-bed7-015dddb771a9)
+![image](https://github.com/Pythonwithsean/Loooffyy-Anime-Streaming-Website/assets/107402787/e0387606-fd2a-4630-ae81-4121a5c52139)
+
 
 # Loooffyy Anime Streaming Website
 
