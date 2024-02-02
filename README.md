@@ -44,26 +44,27 @@ Once the dependencies are installed, you can run Loooffyy using the following co
 
 ```bash
 npm run dev
-
+```
 
 This command starts the development server. Open your web browser and navigate to http://localhost:3000 to access Loooffyy.
 
-Features
-Anime Streaming: Stream your favorite anime series and movies.
-User-Friendly Interface: Enjoy a smooth and intuitive user experience.
-Vast Collection: Explore a vast collection of anime content.
-Technologies Used
-Vite
-TypeScript
-React
-Other libraries and tools (listed in package.json)
-Contributing
-Contributions are welcome! If you'd like to contribute to Loooffyy, please follow the Contributing Guidelines.
+## Features
 
-License
+- Anime Streaming: Stream your favorite anime series and movies.
+- User-Friendly Interface: Enjoy a smooth and intuitive user experience.
+- Vast Collection: Explore a vast collection of anime content.
+- Technologies Used
+-Vite
+-TypeScript
+-React
+-Other libraries and tools (listed in package.json)
+-Contributing
+-Contributions are welcome! If you'd like to contribute to Loooffyy, please follow the Contributing Guidelines.
+
+## License
 This project is licensed under the MIT License.
 
-Contact
+## Contact
 For any inquiries or support, feel free to contact us at email@example.com.
 
 Thank you for choosing Loooffyy! Happy streaming! 🎉
