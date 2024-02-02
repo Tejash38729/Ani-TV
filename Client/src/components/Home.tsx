@@ -34,10 +34,9 @@ const Home = () => {
 
   useEffect(() => {
     setData(animeWallpaper);
-    setImage(
-      popularAnime.map((element: elementImage) => element.images.jpg.image_url)
-    );
+    setImage(popularAnime);
     setLoaded(true);
+    console.log(popularAnime);
   }, [animeWallpaper, popularAnime]);
 
   //Set Quote Render Quote and ask user if they know the character that made this quote
@@ -70,7 +69,6 @@ const Home = () => {
                     src={`${e.attributes.coverImage.original}`}
                     width={3360}
                     height={800}
-                    alt=""
                   />
                 );
               })
@@ -95,10 +93,11 @@ const Home = () => {
                   <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={i}>
                     <img
                       className="AnimeImages"
-                      key={i}
-                      src={`${e}`}
+                      key={e.mal_id}
+                      src={`${e.images.jpg.image_url as elementImage}`}
                       alt={`Item ${i}`}
                     />
+                    <h1>{e.title}</h1>
                   </Grid>
                 );
               })
