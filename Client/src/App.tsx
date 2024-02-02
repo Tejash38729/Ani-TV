@@ -1,7 +1,7 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-// import GlobalProvider from "./contexts/GlobalProvider";
+import GlobalProvider from "./contexts/GlobalProvider";
 
 function App() {
   return (
@@ -9,8 +9,9 @@ function App() {
       {" "}
       <main>
         <Navbar />
-
-        <Home />
+        <GlobalProvider>
+          <Home />
+        </GlobalProvider>
       </main>
     </>
   );
