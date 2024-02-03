@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
-
 import { Grid } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import { useGlobalcontext } from "../contexts/GlobalProvider";
 import CircularProgress from "@mui/material/CircularProgress";
+
+/**
+ * Todo
+ * Create a Redis backend that recieves the api data my client should check if the data exists and the  render it if not send the data to the enpoint
+ *
+ *
+ *
+ */
 
 //######################################################################################################################
 
@@ -16,7 +23,13 @@ type elementData = {
   };
 };
 
-type elementImage = {
+const h1Styles = {
+  color: "white",
+  fontSize: "16px",
+};
+type AnimeImageApiType = {
+  mal_id: string;
+  title: string;
   images: {
     jpg: {
       image_url: string;
@@ -35,15 +48,15 @@ const Home = () => {
   useEffect(() => {
     setData(animeWallpaper);
     setImage(popularAnime);
+    // localStorage.setItem("POPULAR_ANIME", JSON.stringify(popularAnime));
+
     setLoaded(true);
-    console.log(popularAnime);
   }, [animeWallpaper, popularAnime]);
 
   //Set Quote Render Quote and ask user if they know the character that made this quote
   const [image, setImage] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [data, setData] = useState([]);
-  const [quote, setQuote] = useState();
 
   //###############################################################################################################################################################
   //Return
@@ -77,7 +90,7 @@ const Home = () => {
       ) : (
         <CircularProgress className="loader" color="secondary" />
       )}
-      <section className="Container">
+      <section className="Container ">
         <h1>Popular Anime</h1>
         <Grid
           container
@@ -88,16 +101,16 @@ const Home = () => {
         >
           {" "}
           {image
-            ? image.map((e, i) => {
+            ? image.map((e: AnimeImageApiType, i) => {
                 return (
-                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={i}>
+                  <Grid item xs={5} sm={6} md={4} lg={2} xl={2} key={i}>
                     <img
                       className="AnimeImages"
                       key={e.mal_id}
-                      src={`${e.images.jpg.image_url as elementImage}`}
+                      src={`${e.images.jpg.image_url}`}
                       alt={`Item ${i}`}
                     />
-                    <h1>{e.title}</h1>
+                    <h1 style={h1Styles}>{e.title}</h1>
                   </Grid>
                 );
               })
