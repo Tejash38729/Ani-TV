@@ -48,10 +48,17 @@ const Home = () => {
   useEffect(() => {
     setData(animeWallpaper);
     setImage(popularAnime);
-    // localStorage.setItem("POPULAR_ANIME", JSON.stringify(popularAnime));
 
     setLoaded(true);
   }, [animeWallpaper, popularAnime]);
+
+  useEffect(() => {
+    const time = setTimeout(() => {
+      localStorage.setItem("POPULAR_ANIME", JSON.stringify(popularAnime));
+    }, 1000);
+
+    return () => clearTimeout(time);
+  }, [popularAnime]);
 
   //Set Quote Render Quote and ask user if they know the character that made this quote
   const [image, setImage] = useState([]);

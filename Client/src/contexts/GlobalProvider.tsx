@@ -104,7 +104,16 @@ export default function GlobalProvider({
   };
   useEffect(() => {
     getAnimeWallpaper();
-    getPopularAnime();
+    const content = localStorage.getItem("POPULAR_ANIME");
+
+    if (content) {
+      console.log("Found Cached");
+
+      dispatch({ type: GET_POPULAR_ANIME, payload: JSON.parse(content) });
+    } else {
+      console.log("STILL FETCHING");
+      getPopularAnime();
+    }
   }, []);
 
   const [state, dispatch] = useReducer(reducer, initialState);
