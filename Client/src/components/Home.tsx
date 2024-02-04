@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import { useGlobalcontext } from "../contexts/GlobalProvider";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import { Link } from "react-router-dom";
 /**
  * Todo
  * Create a Redis backend that recieves the api data my client should check if the data exists and the  render it if not send the data to the enpoint
@@ -111,12 +111,14 @@ const Home = () => {
             ? image.map((e: AnimeImageApiType, i) => {
                 return (
                   <Grid item xs={5} sm={6} md={4} lg={2} xl={2} key={i}>
-                    <img
-                      className="AnimeImages"
-                      key={e.mal_id}
-                      src={`${e.images.jpg.image_url}`}
-                      alt={`Item ${i}`}
-                    />
+                    <Link to={`/${e.mal_id}/${e.title}`}>
+                      <img
+                        className="AnimeImages"
+                        key={e.mal_id}
+                        src={`${e.images.jpg.image_url}`}
+                        alt={`Item ${i}`}
+                      />
+                    </Link>
                     <h1 style={h1Styles}>{e.title}</h1>
                   </Grid>
                 );

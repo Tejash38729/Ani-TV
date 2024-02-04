@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #000000;
+  background-color: #12141b;
   font-family: "Open Sans", sans-serif;
   width: 100vw;
   height: 100vh;
@@ -16,11 +16,13 @@ body {
   cursor: pointer;
   margin-right: 10px;
   padding-right: 15px;
+  width: 50px;
+  height: auto;
 
-  transition: all 0.5s ease-in;
+  transition: all 0.2s ease-in;
 }
 .Logo:hover {
-  transform: rotate(360deg);
+  transform: scale(1.04);
 }
 
 .main_image {
@@ -32,7 +34,9 @@ body {
   width: 100%;
   max-width: 100%;
   height: 56px;
-  background-color: #0e0e0f;
+  /* background-color: #0e0e0f; */
+  background-color: #101218;
+
   z-index: 99;
 
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -133,8 +137,6 @@ h1 {
   z-index: -4;
   margin: 0 auto;
   overflow: visible;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 .search-bar:active {
@@ -164,6 +166,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 /* Styles for mobile screens */
@@ -176,6 +179,32 @@ main {
     height: 300px; /* Adjust height for smaller screens */
   }
 }
+iframe {
+  width: 100%; /* Make the iframe fill its container */
+  height: 100%; /* Make the iframe fill its container */
+  border: none; /* Remove border */
+  display: block; /* Ensure the iframe behaves as a block element */
+  overflow: hidden; /* Hide any content that overflows the iframe's dimensions */
+  z-index: -1;
+  border-radius: 8px; /* Add rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* Responsive iframe */
+.container {
+  position: relative;
+  overflow: hidden;
+  padding-top: 56.25%; /* 16:9 aspect ratio (divide 9 by 16 = 0.5625) */
+}
+
+#videoPlayer {
+  width: 100%;
+  height: 100%;
+  min-height: 800px;
+
+  border: none;
+  overflow: hidden;
+}
 
 /*  Pc and large Devices */
 
@@ -184,4 +213,18 @@ main {
     width: 200px;
     height: auto;
   }
+}
+
+/* Anime Page Styles */
+
+.AnimePage_main_section {
+  width: 1200px;
+  /* border: 2px solid white; */
+  position: relative;
+  margin-top: 58px;
+}
+
+.AnimePage_main_section h1 {
+  color: white;
+  font-size: 2em;
 }
