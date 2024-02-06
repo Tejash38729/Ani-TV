@@ -103,14 +103,23 @@ export default function GlobalProvider({
     }
   };
   useEffect(() => {
-    getAnimeWallpaper();
     const content = localStorage.getItem("POPULAR_ANIME");
+    const WallpaperContent = localStorage.getItem("ANIME_WALLPAPER");
 
-    if (content) {
-      dispatch({ type: GET_POPULAR_ANIME, payload: JSON.parse(content) });
-    } else {
-      console.log("STILL FETCHING");
-      getPopularAnime();
+    if (content || WallpaperContent) {
+      if (content) {
+        dispatch({ type: GET_POPULAR_ANIME, payload: JSON.parse(content) });
+      } else {
+        getPopularAnime();
+      }
+      if (WallpaperContent) {
+        dispatch({
+          type: GET_ANIME_WALLPAPER,
+          wallpaperPayload: JSON.parse(WallpaperContent),
+        });
+      } else {
+        getAnimeWallpaper();
+      }
     }
   }, []);
 

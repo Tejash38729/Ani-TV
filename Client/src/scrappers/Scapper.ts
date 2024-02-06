@@ -8,7 +8,9 @@ import cheerio from 'cheerio';
 export default async function scrapeWebsite(url: string) {
 try {
         // Fetch HTML content from the URL
-        const response = await axios.get(url);
+    const response = await axios.get(url);
+    if (response.status === 404) return 
+    
 
         // Load HTML content into Cheerio
         const $ = cheerio.load(response.data);

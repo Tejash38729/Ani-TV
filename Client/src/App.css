@@ -228,3 +228,37 @@ iframe {
   color: white;
   font-size: 2em;
 }
+
+.AnimePage_main_section_ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+
+  margin-top: 10px;
+  gap: 23px;
+}
+
+.AnimePage_main_section h2 {
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.AnimePage_main_section_li {
+}
+
+.EpisodeButton {
+  background-color: #1c1c1e;
+  color: white;
+  border: none;
+  width: 150px;
+  height: 90px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.EpisodeButton:hover {
+  background-color: #303036;
+}

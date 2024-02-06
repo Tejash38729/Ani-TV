@@ -27,7 +27,7 @@ const h1Styles = {
   color: "white",
   fontSize: "16px",
 };
-type AnimeImageApiType = {
+export type AnimeImageApiType = {
   mal_id: string;
   title: string;
   images: {
@@ -35,6 +35,7 @@ type AnimeImageApiType = {
       image_url: string;
     };
   };
+  episodes: number;
 };
 
 //################################################################################################################
@@ -55,10 +56,11 @@ const Home = () => {
   useEffect(() => {
     const time = setTimeout(() => {
       localStorage.setItem("POPULAR_ANIME", JSON.stringify(popularAnime));
+      localStorage.setItem("ANIME_WALLPAPER", JSON.stringify(animeWallpaper));
     }, 1000);
 
     return () => clearTimeout(time);
-  }, [popularAnime]);
+  }, [popularAnime, animeWallpaper]);
 
   //Set Quote Render Quote and ask user if they know the character that made this quote
   const [image, setImage] = useState([]);
