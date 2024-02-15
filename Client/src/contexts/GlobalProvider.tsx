@@ -22,8 +22,8 @@ const GET_POPULAR_ANIME = "GET_POPULAR_ANIME";
 // const GET_UPCOMING_ANIME = "GET_UPCOMING_ANIME";
 // const GET_AIRING_ANIME = "GET_AIRING_ANIME";
 const GET_ANIME_WALLPAPER = "GET_ANIME_WALLPAPER";
-const ANIMELIST_URL = "https://api.myanimelist.net/v2";
-const ANILIST_TOKEN = " 987e37ef681348e269dce31937b347f7";
+// const ANIMELIST_URL = "https://api.myanimelist.net/v2";
+// const ANILIST_TOKEN = " 987e37ef681348e269dce31937b347f7";
 
 // X-MAL-CLIENT-ID: 987e37ef681348e269dce31937b347f7
 
@@ -59,26 +59,31 @@ export default function GlobalProvider({
     wallpaperPayload?: any; // Optional wallpaperPayload
   };
 
-  useEffect(() => {
-    const apiUrl = " https://api.myanimelist.net/v2/anime/suggestions?limit=4";
+  useEffect(()=> {
+    getAnimeWallpaper();
+    getPopularAnime();
+  },[])
 
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${ANILIST_TOKEN}`,
-    };
+  // useEffect(() => {
+  //   const apiUrl = " https://api.myanimelist.net/v2/anime/suggestions?limit=4";
 
-    axios
-      .get(apiUrl, {
-        headers: headers,
-      })
-      .then((response) => {
-        // Handle successful response
-        console.log("Response:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
+  //   const headers = {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${ANILIST_TOKEN}`,
+  //   };
+
+  //   axios
+  //     .get(apiUrl, {
+  //       headers: headers,
+  //     })
+  //     .then((response) => {
+  //       // Handle successful response
+  //       console.log("Response:", response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // }, []);
 
   async function getAnimeWallpaper() {
     dispatch({ type: LOADING });
@@ -131,7 +136,7 @@ export default function GlobalProvider({
     const content = localStorage.getItem("POPULAR_ANIME");
     const WallpaperContent = localStorage.getItem("ANIME_WALLPAPER");
 
-    if (content || WallpaperContent) {
+    if (content || WallpaperContent ) {
       if (content) {
         dispatch({ type: GET_POPULAR_ANIME, payload: JSON.parse(content) });
       } else {
@@ -142,7 +147,8 @@ export default function GlobalProvider({
           type: GET_ANIME_WALLPAPER,
           wallpaperPayload: JSON.parse(WallpaperContent),
         });
-      } else {
+      } 
+      else {
         getAnimeWallpaper();
       }
     }
