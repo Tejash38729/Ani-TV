@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 //######################################################################################################################
 
-// Types;
+// Types
 type elementData = {
   attributes: {
     coverImage: {
