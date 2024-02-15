@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #000000;
+  background-color: #12141b;
   font-family: "Open Sans", sans-serif;
   width: 100vw;
   height: 100vh;
@@ -16,11 +16,13 @@ body {
   cursor: pointer;
   margin-right: 10px;
   padding-right: 15px;
+  width: 50px;
+  height: auto;
 
-  transition: all 0.5s ease-in;
+  transition: all 0.2s ease-in;
 }
 .Logo:hover {
-  transform: rotate(360deg);
+  transform: scale(1.04);
 }
 
 .main_image {
@@ -32,7 +34,9 @@ body {
   width: 100%;
   max-width: 100%;
   height: 56px;
-  background-color: #0e0e0f;
+  /* background-color: #0e0e0f; */
+  background-color: #101218;
+
   z-index: 99;
 
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -45,38 +49,79 @@ body {
   justify-content: space-between;
 }
 
-#Container {
+.Container {
   padding: 0;
   width: 100%;
   height: 100%;
 
-  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+  margin-top: 20px;
 }
 
+.Container h1 {
+  font-weight: 500;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.AnimeImages {
+  width: 100%;
+  margin-top: 4px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.AnimeImages:hover {
+  transform: scale(1.05);
+  opacity: 0.4;
+}
+
+/* Style for the anime search bar */
 .search-bar {
-  width: 200px;
+  width: 220px; /* Adjust width as needed */
   height: 34px;
-  border: 2px solid #0f0d17;
-  box-shadow: -5px 4px 2px 2px black;
   padding: 8px;
+  border: 2px solid #0f0d17; /* Border color */
   border-radius: 2px;
-  margin-right: 10px;
   font-weight: 500;
   outline: none;
+  background-color: #1c1c1e; /* Background color */
+  color: #ffffff; /* Text color */
+  box-shadow: -5px 4px 2px 2px black; /* Box shadow */
 }
 
 .search-bar::placeholder {
-  color: #0f0d17;
-  font-family: sans-serif;
-  font-weight: 500;
-  border: none;
+  color: #6b6b6b; /* Placeholder color */
+}
+
+.search-bar:focus {
+  border-color: #8a8a8a; /* Border color on focus */
 }
 
 .Carousel {
   width: 100%;
   height: 100%;
 
-  margin: 56px auto;
+  margin: 0 auto;
+  margin-top: 56px;
+}
+
+h1 {
+  color: white;
+}
+
+.loader {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%);
+  transform: translateY(-50%);
+  margin: 0 auto;
 }
 
 .Carousel img {
@@ -84,14 +129,14 @@ body {
   object-position: center;
   image-rendering: crisp-edges;
   image-resolution: 3600dpi;
+  opacity: 0.7;
   width: 100%;
   height: 100%;
   min-height: 500px;
+  max-height: 530px;
   z-index: -4;
   margin: 0 auto;
   overflow: visible;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 .search-bar:active {
@@ -121,6 +166,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 /* Styles for mobile screens */
@@ -132,4 +178,87 @@ main {
   .carousel img {
     height: 300px; /* Adjust height for smaller screens */
   }
+}
+iframe {
+  width: 100%; /* Make the iframe fill its container */
+  height: 100%; /* Make the iframe fill its container */
+  border: none; /* Remove border */
+  display: block; /* Ensure the iframe behaves as a block element */
+  overflow: hidden; /* Hide any content that overflows the iframe's dimensions */
+  z-index: -1;
+  border-radius: 8px; /* Add rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* Responsive iframe */
+.container {
+  position: relative;
+  overflow: hidden;
+  padding-top: 56.25%; /* 16:9 aspect ratio (divide 9 by 16 = 0.5625) */
+}
+
+#videoPlayer {
+  width: 100%;
+  height: 100%;
+  min-height: 800px;
+
+  border: none;
+  overflow: hidden;
+}
+
+/*  Pc and large Devices */
+
+@media screen and (min-width: 800) {
+  .AnimeImages {
+    width: 200px;
+    height: auto;
+  }
+}
+
+/* Anime Page Styles */
+
+.AnimePage_main_section {
+  width: 1200px;
+  /* border: 2px solid white; */
+  position: relative;
+  margin-top: 58px;
+}
+
+.AnimePage_main_section h1 {
+  color: white;
+  font-size: 2em;
+}
+
+.AnimePage_main_section_ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+
+  margin-top: 10px;
+  gap: 23px;
+}
+
+.AnimePage_main_section h2 {
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.AnimePage_main_section_li {
+}
+
+.EpisodeButton {
+  background-color: #1c1c1e;
+  color: white;
+  border: none;
+  width: 150px;
+  height: 90px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.EpisodeButton:hover {
+  background-color: #303036;
 }

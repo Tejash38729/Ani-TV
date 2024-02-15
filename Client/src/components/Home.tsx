@@ -1,51 +1,41 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Grid } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-
+import { useGlobalcontext } from "../contexts/GlobalProvider";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Link } from "react-router-dom";
 /**
- * https://kitsu.io/api/edge/
- * https://animechan.xyz/api/random
- * https://api.aniapi.com
- * https://graphql.anilist.co'
+ * Todo
+ * Create a Redis backend that recieves the api data my client should check if the data exists and the  render it if not send the data to the enpoint
+ *
  *
  *
  */
 
-//Urls
-
-const ANILIST_URL = "https://graphql.anilist.co";
-const BASE_URL = "https://kitsu.io/api/edge";
-const JIKAN_URL = "https://api.jikan.moe/v4";
-const QUOTES_URL = "https://animechan.xyz/api/quotes/anime?title=one%20piece";
-const ANIAPI = "https://api.aniapi.com/v1";
-
-const query = `
-query ($id: Int) { # Define which variables will be used in the query (id)
-  Media (id: $id, type: ANIME) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
-    id
-    title {
-      romaji
-      english
-      native
-    }
-  }
-}
-`;
-
-const variables = {
-  id: 15125,
-};
-
 //######################################################################################################################
 
-//Types
+// Types
 type elementData = {
   attributes: {
     coverImage: {
-      large: string;
+      original: string;
     };
   };
+};
+
+const h1Styles = {
+  color: "white",
+  fontSize: "16px",
+};
+export type AnimeImageApiType = {
+  mal_id: string;
+  title: string;
+  images: {
+    jpg: {
+      image_url: string;
+    };
+  };
+  episodes: number;
 };
 
 //################################################################################################################
@@ -53,130 +43,91 @@ type elementData = {
 //Home React Func
 const Home = () => {
   //Render LOGIC
+  const { animeWallpaper } = useGlobalcontext() as any;
+  const { popularAnime } = useGlobalcontext() as any;
+
+  useEffect(() => {
+    setData(animeWallpaper);
+    setImage(popularAnime);
+
+    setLoaded(true);
+  }, [animeWallpaper, popularAnime]);
+
+  useEffect(() => {
+    const time = setTimeout(() => {
+      localStorage.setItem("POPULAR_ANIME", JSON.stringify(popularAnime));
+      localStorage.setItem("ANIME_WALLPAPER", JSON.stringify(animeWallpaper));
+    }, 1000);
+
+    return () => clearTimeout(time);
+  }, [popularAnime, animeWallpaper]);
 
   //Set Quote Render Quote and ask user if they know the character that made this quote
   const [image, setImage] = useState([]);
+  const [loaded, setLoaded] = useState(false);
   const [data, setData] = useState([]);
-  const [quote, setQuote] = useState();
-
-  //image_url
-  // large_image_url
-  //small_image_url
-
-  async function getJikanData() {
-    // const anime_id = 1;
-    const response = await fetch(`https://api.jikan.moe/v4/top/anime`);
-    // const response = await fetch("https://api.aniapi.com/1");
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-
-      setImage(data.data.map((e) => e.images.jpg.large_image_url));
-    }
-  }
-
-  async function getQuotedata() {
-    const response = await fetch(QUOTES_URL);
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-    }
-  }
-
-  // async function getAnimeData() {
-  //   const response = await fetch(ANILIST_URL, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       query: query,
-  //       variables: variables,
-  //     }),
-  //   });
-
-  //   if (response.ok) {
-  //     const data = await response.json();
-  //     console.log(data);
-  //   } else {
-  //     console.log("Error In Request");
-  //   }
-  // }
-
-  async function fetchAnime() {
-    try {
-      // Make a GET request to fetch anime data
-      const response = await axios.get(`${BASE_URL}/anime`, {
-        params: {
-          "filter[categories]": "adventure",
-          "page[limit]": 10,
-        },
-        headers: {
-          Accept: "application/vnd.api+json",
-          "Content-Type": "application/vnd.api+json",
-        },
-      });
-
-      console.log(response.data.data);
-      // setData(response.data.data);
-      setData(response.data.data.map((e) => e.attributes.coverImage.large));
-    } catch (error) {
-      console.error("Error fetching anime:", error);
-    }
-  }
-
-  useEffect(() => {
-    // getAnimeData();
-    // getQuotedata();
-    getJikanData();
-    fetchAnime();
-  }, []);
 
   //###############################################################################################################################################################
   //Return
 
   return (
     <div>
-      <Carousel
-        className="Carousel"
-        swipe={true}
-        stopAutoPlayOnHover={false}
-        autoPlay={true}
-        indicators={false}
-        animation="fade"
-        cycleNavigation={true}
-        duration={300}
-      >
-        {data
-          ? data.map((e, i) => {
-              return <img key={i} src={`${e}`} alt="" />;
-            })
-          : null}
-      </Carousel>
-      <Grid
-        container
-        id="Container"
-        spacing={2}
-        direction="row"
-        justifyContent="flex-start"
-      >
-        <Grid item xs={6} spacing={3}>
-          {" "}
-          {image
-            ? image.map((e, i) => {
+      {loaded ? (
+        <Carousel
+          className="Carousel"
+          swipe={true}
+          stopAutoPlayOnHover={false}
+          autoPlay={true}
+          indicators={false}
+          animation="fade"
+          cycleNavigation={true}
+          duration={300}
+        >
+          {data.length !== 0 && loaded === true
+            ? data.map((e: elementData, i) => {
                 return (
                   <img
-                    className="AnimeImages"
                     key={i}
-                    src={`${e}`}
-                    alt="Anime"
+                    src={`${e.attributes.coverImage.original}`}
+                    width={3360}
+                    height={800}
                   />
                 );
               })
             : null}
+        </Carousel>
+      ) : (
+        <CircularProgress className="loader" color="secondary" />
+      )}
+      <section className="Container ">
+        <h1>Popular Anime</h1>
+        <Grid
+          container
+          spacing={2}
+          direction="row"
+          marginTop={5}
+          justifyContent="center"
+        >
+          {" "}
+          {image
+            ? image.map((e: AnimeImageApiType, i) => {
+                return (
+                  <Grid item xs={5} sm={6} md={4} lg={2} xl={2} key={i}>
+                    <Link to={`/${e.mal_id}/${e.title}`}>
+                      <img
+                        className="AnimeImages"
+                        key={e.mal_id}
+                        src={`${e.images.jpg.image_url}`}
+                        alt={`Item ${i}`}
+                      />
+                    </Link>
+                    <h1 style={h1Styles}>{e.title}</h1>
+                  </Grid>
+                );
+              })
+            : null}
         </Grid>
-      </Grid>
+      </section>
     </div>
   );
 };
