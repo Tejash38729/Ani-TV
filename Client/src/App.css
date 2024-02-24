@@ -187,7 +187,7 @@ iframe {
   overflow: hidden; /* Hide any content that overflows the iframe's dimensions */
   z-index: -1;
   border-radius: 8px; /* Add rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+ 
 }
 
 /* Responsive iframe */
@@ -221,7 +221,7 @@ iframe {
   width: 1200px;
   /* border: 2px solid white; */
   position: relative;
-  margin-top: 58px;
+  margin-bottom: -60px;
 }
 
 .AnimePage_main_section h1 {
@@ -248,12 +248,12 @@ iframe {
 }
 
 .EpisodeButton {
-  background-color: #1c1c1e;
+  background-color: rgb(204, 69, 69);
   color: white;
   border: none;
-  width: 150px;
-  height: 90px;
-  padding: 10px 10px;
+  width: 85px;
+  height: 60px;
+  padding: 10px 5px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;

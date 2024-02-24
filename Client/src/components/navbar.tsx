@@ -11,7 +11,7 @@ const Navbar = () => {
     <nav className="navbar">
       <Stack direction="row" spacing={2}>
         <h1 className="app-heading">Loooffyy</h1>
-        <Link className="Logo" to="/">k
+        <Link className="Logo" to="/">
           <img
             className="Logo"
             src="../../public/logo.png"
