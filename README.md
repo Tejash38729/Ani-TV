@@ -68,6 +68,6 @@ This command starts the development server. Open your web browser and navigate t
 This project is licensed under the MIT License.
 
 ## Contact
-For any inquiries or support, feel free to contact us at email@example.com.
+For any inquiries or support, feel free to contact us at Pythonwithsean@gmail.com.
 
 Thank you for choosing Loooffyy! Happy streaming! 🎉
