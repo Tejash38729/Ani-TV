@@ -1,30 +1,20 @@
-import {
-  ContextType,
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-} from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import axios from "axios";
 
-export const GlobalContext = createContext<Object>({});
+export const GlobalContext = createContext<object>({});
 
 type GlobalProviderProps = {
-  children: ReactNode;
+  children: JSX.Element;
 };
 
-//Actions
-
+// Actions
 const LOADING = "LOADING";
-// const SEARCH = "SEARCH";
 const GET_POPULAR_ANIME = "GET_POPULAR_ANIME";
 // const GET_UPCOMING_ANIME = "GET_UPCOMING_ANIME";
 // const GET_AIRING_ANIME = "GET_AIRING_ANIME";
 const GET_ANIME_WALLPAPER = "GET_ANIME_WALLPAPER";
 // const ANIMELIST_URL = "https://api.myanimelist.net/v2";
 // const ANILIST_TOKEN = " 987e37ef681348e269dce31937b347f7";
-
 // X-MAL-CLIENT-ID: 987e37ef681348e269dce31937b347f7
 
 //URLS
@@ -41,6 +31,7 @@ export default function GlobalProvider({
   children,
 }: GlobalProviderProps): JSX.Element {
   //Initial State
+
   const initialState = {
     popularAnime: [],
     animeWallpaper: [],
@@ -52,17 +43,34 @@ export default function GlobalProvider({
     loading: false,
   };
 
+  const reducer = (state: object, action: ActionType) => {
+    switch (action.type) {
+      case LOADING:
+        return { ...state, loading: true };
+      case GET_POPULAR_ANIME:
+        return { ...state, popularAnime: action.payload, loading: false };
+      case GET_ANIME_WALLPAPER:
+        return {
+          ...state,
+          animeWallpaper: action.wallpaperPayload,
+          loading: false,
+        };
+      default:
+        return state;
+    }
+  };
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   //Action Type
   type ActionType = {
     type: string;
-    payload?: any; // Optional payload
-    wallpaperPayload?: any; // Optional wallpaperPayload
+    payload?: object;
+    wallpaperPayload?: object;
   };
-
-  useEffect(()=> {
+  useEffect(() => {
     getAnimeWallpaper();
     getPopularAnime();
-  },[])
+  }, []);
 
   // useEffect(() => {
   //   const apiUrl = " https://api.myanimelist.net/v2/anime/suggestions?limit=4";
@@ -116,27 +124,11 @@ export default function GlobalProvider({
     dispatch({ ...state, type: GET_POPULAR_ANIME, payload: data.data });
   }
 
-  const reducer = (state: any, action: ActionType) => {
-    switch (action.type) {
-      case LOADING:
-        return { ...state, loading: true };
-      case GET_POPULAR_ANIME:
-        return { ...state, popularAnime: action.payload, loading: false };
-      case GET_ANIME_WALLPAPER:
-        return {
-          ...state,
-          animeWallpaper: action.wallpaperPayload,
-          loading: false,
-        };
-      default:
-        return state;
-    }
-  };
   useEffect(() => {
     const content = localStorage.getItem("POPULAR_ANIME");
     const WallpaperContent = localStorage.getItem("ANIME_WALLPAPER");
 
-    if (content || WallpaperContent ) {
+    if (content || WallpaperContent) {
       if (content) {
         dispatch({ type: GET_POPULAR_ANIME, payload: JSON.parse(content) });
       } else {
@@ -147,14 +139,11 @@ export default function GlobalProvider({
           type: GET_ANIME_WALLPAPER,
           wallpaperPayload: JSON.parse(WallpaperContent),
         });
-      } 
-      else {
+      } else {
         getAnimeWallpaper();
       }
     }
   }, []);
-
-  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <GlobalContext.Provider
@@ -167,6 +156,7 @@ export default function GlobalProvider({
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useGlobalcontext() {
   return useContext(GlobalContext);
 }

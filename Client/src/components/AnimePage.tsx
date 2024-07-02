@@ -1,4 +1,4 @@
-import { CircularProgress, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import "../App.css";
 import { useGlobalcontext } from "../contexts/GlobalProvider";
 
@@ -17,11 +17,11 @@ import { AnimeImageApiType } from "./Home";
 //https://anitaku.to/spy-x-family-dub-episode-3
 
 export default function AnimePage(): JSX.Element {
-  const [url, setUrl] = useState<String>("");
+  const [url, setUrl] = useState<string>("");
   const { mal_id } = useParams();
-  const [episode, setEpisode] = useState<number>(
-    Number.parseInt(localStorage.getItem(`Episode${mal_id}`)) || 1
-  );
+  const epNum = localStorage.getItem(`Episode${mal_id}`);
+  const EpisodeNum = epNum !== null ? parseInt(epNum) : 1;
+  const [episode, setEpisode] = useState<number>(EpisodeNum);
   const [currentAnime, setCurrentAnime] = useState<AnimeImageApiType>();
   const { title } = useParams();
 

@@ -4,15 +4,6 @@ import Carousel from "react-material-ui-carousel";
 import { useGlobalcontext } from "../contexts/GlobalProvider";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link } from "react-router-dom";
-/**
- * Todo
- * Create a Redis backend that recieves the api data my client should check if the data exists and the  render it if not send the data to the enpoint
- *
- *
- *
- */
-
-//######################################################################################################################
 
 // Types
 type elementData = {
@@ -27,6 +18,7 @@ const h1Styles = {
   color: "white",
   fontSize: "16px",
 };
+
 export type AnimeImageApiType = {
   mal_id: string;
   title: string;
@@ -38,18 +30,17 @@ export type AnimeImageApiType = {
   episodes: number;
 };
 
-//################################################################################################################
-
 //Home React Func
 const Home = () => {
-  //Render LOGIC
+  // TODO: Refactor Later
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { animeWallpaper } = useGlobalcontext() as any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { popularAnime } = useGlobalcontext() as any;
 
   useEffect(() => {
     setData(animeWallpaper);
     setImage(popularAnime);
-
     setLoaded(true);
   }, [animeWallpaper, popularAnime]);
 
@@ -63,12 +54,9 @@ const Home = () => {
   }, [popularAnime, animeWallpaper]);
 
   //Set Quote Render Quote and ask user if they know the character that made this quote
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState<AnimeImageApiType[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [data, setData] = useState([]);
-
-  //###############################################################################################################################################################
-  //Return
+  const [data, setData] = useState<elementData[]>([]);
 
   return (
     <div>
