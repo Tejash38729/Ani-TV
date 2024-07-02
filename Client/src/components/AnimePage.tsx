@@ -12,9 +12,8 @@ import { AnimeImageApiType } from "./Home";
 //Episode Functionality
 
 //https://embtaku.pro/download?id=MjE5Njg5&title=One+Piece+Episode+1092
-// "//embtaku.pro/streaming.php?id=MjE5OTU4&title=One+Piece%3A+Dai+Tannou+Kikaku%21+%22Shi+no+Gekai%22+Trafalgar+Law+Episode+1&typesub=SUB"
-
-//https://anitaku.to/spy-x-family-dub-episode-3
+//embtaku.pro/streaming.php?id=MjE5OTU4&title=One+Piece%3A+Dai+Tannou+Kikaku%21+%22Shi+no+Gekai%22+Trafalgar+Law+Episode+1&typesub=SUB
+//https://anitaku.pe/spy-x-family-dub-episode-3
 
 export default function AnimePage(): JSX.Element {
   const [url, setUrl] = useState<string>("");
@@ -31,7 +30,6 @@ export default function AnimePage(): JSX.Element {
     const curr = popularAnime.filter((anime: AnimeImageApiType) => {
       return anime.mal_id == mal_id;
     });
-    // setCurrentAnime(curr);
     if (curr) {
       setCurrentAnime(curr[0]);
     }
@@ -52,10 +50,14 @@ export default function AnimePage(): JSX.Element {
 
   useEffect(() => {
     convertNametoStandard(title).then((title) => {
-      scrapeWebsite(`${baseUrl}/${title}-episode-${episode}`).then((i) => {
+      scrapeWebsite(
+        `${baseUrl}/${title.replace(" ", "-")}-episode-${episode}`
+      ).then((i) => {
         setUrl(i);
       });
     });
+
+    location.pathname.replace("%", "-");
   }, [title, episode]);
 
   // URL-Structure:  https://anitaku.pe/spy-x-family-dub-episode-3

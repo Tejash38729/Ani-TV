@@ -101,7 +101,11 @@ const Home = () => {
             ? image.map((e: AnimeImageApiType, i) => {
                 return (
                   <Grid item xs={5} sm={6} md={4} lg={2} xl={2} key={i}>
-                    <Link to={`/${e.mal_id}/${e.title}`}>
+                    <Link
+                      to={`/${e.mal_id}/${encodeURIComponent(
+                        e.title.replace(" ", "-")
+                      )}`}
+                    >
                       <img
                         className="AnimeImages"
                         key={e.mal_id}
