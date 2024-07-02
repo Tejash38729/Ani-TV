@@ -37,25 +37,28 @@ export default function AnimePage(): JSX.Element {
     }
   }, [popularAnime, mal_id]);
 
-  function conevertNametoStandard(name: string | undefined): Promise<string> {
-    return new Promise((res, _) => {
+  function convertNametoStandard(name: string | undefined): Promise<string> {
+    return new Promise((res, rej) => {
       if (name !== undefined) {
         res(name.split(" ").join("-"));
         return res;
+      } else {
+        rej("Could not Process string");
       }
     });
   }
 
-  const baseUrl = "https://anitaku.to";
+  const baseUrl = "https://anitaku.pe";
 
   useEffect(() => {
-    conevertNametoStandard(title).then((title) => {
+    convertNametoStandard(title).then((title) => {
       scrapeWebsite(`${baseUrl}/${title}-episode-${episode}`).then((i) => {
         setUrl(i);
       });
     });
-  }, [title]);
-  // https://anitaku.to/spy-x-family-dub-episode-3
+  }, [title, episode]);
+
+  // URL-Structure:  https://anitaku.pe/spy-x-family-dub-episode-3
 
   useEffect(() => {
     // Save the last watched episode to localStorage whenever it changes
