@@ -1,16 +1,13 @@
 import { Container } from "@mui/material";
 import "../App.css";
 import { useGlobalcontext } from "../contexts/GlobalProvider";
-
 import { useEffect, useState } from "react";
 import scrapeWebsite from "../scrappers/Scapper";
 import { useParams } from "react-router-dom";
 import { Frown } from "lucide-react";
-import { AnimeImageApiType } from "./Home";
 
 //TODO Search Functionality
 //Episode Functionality
-
 //https://embtaku.pro/download?id=MjE5Njg5&title=One+Piece+Episode+1092
 //embtaku.pro/streaming.php?id=MjE5OTU4&title=One+Piece%3A+Dai+Tannou+Kikaku%21+%22Shi+no+Gekai%22+Trafalgar+Law+Episode+1&typesub=SUB
 //https://anitaku.pe/spy-x-family-dub-episode-3
@@ -21,13 +18,12 @@ export default function AnimePage(): JSX.Element {
   const epNum = localStorage.getItem(`Episode${mal_id}`);
   const EpisodeNum = epNum !== null ? parseInt(epNum) : 1;
   const [episode, setEpisode] = useState<number>(EpisodeNum);
-  const [currentAnime, setCurrentAnime] = useState<AnimeImageApiType>();
+  const [currentAnime, setCurrentAnime] = useState();
   const { title } = useParams();
-
   const { popularAnime } = useGlobalcontext();
-
+  console.log(popularAnime);
   useEffect(() => {
-    const curr = popularAnime.filter((anime: AnimeImageApiType) => {
+    const curr = popularAnime.filter((anime) => {
       return anime.mal_id == mal_id;
     });
     if (curr) {
@@ -52,6 +48,8 @@ export default function AnimePage(): JSX.Element {
     convertNametoStandard(title).then((title) => {
       scrapeWebsite(
         `${baseUrl}/${title.replace(" ", "-")}-episode-${episode}`
+        // "https://aniwatchtv.to/watch/one-piece-movie-1-3096?ep=58122"
+        // "https://ryuk.to/watch/oshi-no-ko-2nd-season-episode-1"
       ).then((i) => {
         setUrl(i);
       });
@@ -87,8 +85,10 @@ export default function AnimePage(): JSX.Element {
         {url !== "" ? (
           <iframe
             allowFullScreen={true}
-            loading="lazy"
+            loading="eager"
             name="animePlayer"
+            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
+            autoFocus={true}
             src={`${url}`}
             autoFocus={true}
             frameBorder="0"

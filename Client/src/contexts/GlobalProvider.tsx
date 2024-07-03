@@ -13,20 +13,23 @@ const GET_POPULAR_ANIME = "GET_POPULAR_ANIME";
 // const GET_UPCOMING_ANIME = "GET_UPCOMING_ANIME";
 // const GET_AIRING_ANIME = "GET_AIRING_ANIME";
 const GET_ANIME_WALLPAPER = "GET_ANIME_WALLPAPER";
+
 // const ANIMELIST_URL = "https://api.myanimelist.net/v2";
 // const ANILIST_TOKEN = " 987e37ef681348e269dce31937b347f7";
 // X-MAL-CLIENT-ID: 987e37ef681348e269dce31937b347f7
 
 //URLS
-
+//https://github.com/codex0555/Aniwatch-Api
+//https://github.com/ghoshRitesh12/aniwatch-api
+//https://www.miruro.tv/
+//https://github.com/ghoshRitesh12/aniwatch-api
 // const ANILIST_URL = "https://graphql.anilist.co";
-const BASE_URL = "https://kitsu.io/api/edge";
+// const BASE_URL = "https://kitsu.io/api/edge";
 const JIKAN_URL = "https://api.jikan.moe/v4";
 // const QUOTES_URL = "https://animechan.xyz/api/quotes/anime?title=one%20piece";
 // const ANIAPI = "https://api.aniapi.com/v1";
 
 //Provider
-
 export default function GlobalProvider({
   children,
 }: GlobalProviderProps): JSX.Element {
@@ -96,31 +99,24 @@ export default function GlobalProvider({
   async function getAnimeWallpaper() {
     dispatch({ type: LOADING });
 
-    const response = await axios.get(`${BASE_URL}/anime`, {
-      headers: {
-        Accept: "application/vnd.api+json",
-        "Content-Type": "application/vnd.api+json",
-      },
-      params: {
-        "filter[categories]": "adventure",
-        "page[limit]": 10,
-      },
-    });
-
-    const data = await response.data;
-
+    const resp = await axios.get(
+      "https://aniwatch-api-b9w3.onrender.com/anime/home"
+    );
+    const data = await resp.data;
+    console.log(data.slides);
     dispatch({
       ...state,
       type: GET_ANIME_WALLPAPER,
-      wallpaperPayload: data.data,
+      wallpaperPayload: data.spotlightAnimes,
     });
   }
 
   async function getPopularAnime() {
     dispatch({ type: LOADING });
-    const response = await fetch(`${JIKAN_URL}/top/anime?filter=bypopularity`);
-    const data = await response.json();
-
+    const response = await axios.get(
+      `${JIKAN_URL}/top/anime?filter=bypopularity`
+    );
+    const data = await response.data;
     dispatch({ ...state, type: GET_POPULAR_ANIME, payload: data.data });
   }
 

@@ -6,41 +6,22 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Link } from "react-router-dom";
 
 // Types
-type elementData = {
-  attributes: {
-    coverImage: {
-      original: string;
-    };
-  };
-};
-
 const h1Styles = {
   color: "white",
   fontSize: "16px",
 };
 
-export type AnimeImageApiType = {
-  mal_id: string;
-  title: string;
-  images: {
-    jpg: {
-      image_url: string;
-    };
-  };
-  episodes: number;
-};
-
-//Home React Func
 const Home = () => {
-  // TODO: Refactor Later
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { animeWallpaper } = useGlobalcontext() as any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { popularAnime } = useGlobalcontext() as any;
 
+  console.log(popularAnime);
   useEffect(() => {
-    setData(animeWallpaper);
-    setImage(popularAnime);
+    setbackgroundImageState(animeWallpaper);
+    setPopularAnimeState(popularAnime);
+    console.log("final state", popularAnime);
     setLoaded(true);
   }, [animeWallpaper, popularAnime]);
 
@@ -54,10 +35,9 @@ const Home = () => {
   }, [popularAnime, animeWallpaper]);
 
   //Set Quote Render Quote and ask user if they know the character that made this quote
-  const [image, setImage] = useState<AnimeImageApiType[]>([]);
+  const [backgroundImageState, setbackgroundImageState] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const [data, setData] = useState<elementData[]>([]);
-
+  const [popularAnimeState, setPopularAnimeState] = useState([]);
   return (
     <div>
       {loaded ? (
@@ -71,12 +51,12 @@ const Home = () => {
           cycleNavigation={true}
           duration={300}
         >
-          {data.length !== 0 && loaded === true
-            ? data.map((e: elementData, i) => {
+          {backgroundImageState.length !== 0 && loaded === true
+            ? backgroundImageState.map((backgroundImage, i) => {
                 return (
                   <img
                     key={i}
-                    src={`${e.attributes.coverImage.original}`}
+                    src={`${backgroundImage.poster}`}
                     width={3360}
                     height={800}
                   />
@@ -97,15 +77,11 @@ const Home = () => {
           justifyContent="center"
         >
           {" "}
-          {image
-            ? image.map((e: AnimeImageApiType, i) => {
+          {popularAnimeState
+            ? popularAnimeState.map((e, i) => {
                 return (
                   <Grid item xs={5} sm={6} md={4} lg={2} xl={2} key={i}>
-                    <Link
-                      to={`/${e.mal_id}/${encodeURIComponent(
-                        e.title.replace(" ", "-")
-                      )}`}
-                    >
+                    <Link to={`/${e.mal_id}/${encodeURIComponent(e.title)}`}>
                       <img
                         className="AnimeImages"
                         key={e.mal_id}

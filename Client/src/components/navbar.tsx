@@ -22,7 +22,7 @@ const Navbar = () => {
 
       <Stack direction="row" spacing={2}>
         <input
-          type="text"
+          type="search"
           className="search-bar"
           placeholder="Enter Anime Name"
           value={value}
