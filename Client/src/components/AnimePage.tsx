@@ -59,7 +59,6 @@ export default function AnimePage(): JSX.Element {
   }, [title, episode]);
 
   // URL-Structure:  https://anitaku.pe/spy-x-family-dub-episode-3
-
   useEffect(() => {
     // Save the last watched episode to localStorage whenever it changes
     localStorage.setItem(`Episode${mal_id}`, episode.toString());
@@ -82,12 +81,11 @@ export default function AnimePage(): JSX.Element {
         <br />
         <br />
         <br />
-        {url !== "" ? (
+        {url !== undefined ? (
           <iframe
             allowFullScreen={true}
             loading="eager"
             name="animePlayer"
-            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
             autoFocus={true}
             src={`${url}`}
             autoFocus={true}
@@ -99,8 +97,26 @@ export default function AnimePage(): JSX.Element {
             {" "}
             <Frown />
             <h1>Not Found....</h1>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
           </div>
         )}
+        <br />
+        <br />
+        <br />
+        <br />
       </section>
       <section className="AnimePage_main_section">
         <h1 className="AnimePage_main_section_h1">
