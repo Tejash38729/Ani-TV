@@ -76,7 +76,7 @@ export default function HomePage() {
               <h1>Not Found....</h1>
             )}
           </section>
-          <section className="mb-8">
+          {/* <section className="mb-8">
             <h2 className="text-2xl text-white font-bold mb-4">
               CONTINUE WATCHING
             </h2>
@@ -132,7 +132,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-          </section>
+          </section> */}
           //Trending
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4 text-white">TRENDING</h2>
