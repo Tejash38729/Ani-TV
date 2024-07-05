@@ -1,3 +1,6 @@
+![image](https://github.com/Pythonwithsean/Loooffyy-Anime-Streaming-Website/assets/107402787/e3813e86-116d-4ee7-8670-43b9e95e2e1c)
+![image](https://github.com/Pythonwithsean/Loooffyy-Anime-Streaming-Website/assets/107402787/42e75615-456f-4086-abe4-9427e6cd6e50)
+
 ![image](https://github.com/Pythonwithsean/Loooffyy-Anime-Streaming-Website/assets/107402787/e0387606-fd2a-4630-ae81-4121a5c52139)
 
 ![image](https://github.com/Pythonwithsean/Loooffyy-Anime-Streaming-Website/assets/107402787/f5e5b026-4d1c-47da-9860-e5ab5367499e)
@@ -6,7 +9,7 @@
 
 # Loooffyy Anime Streaming Website
 
-Welcome to Loooffyy, an anime streaming website built with Vite, TypeScript, and React.
+Welcome to Loooffyy, an anime streaming website built with Vite, TypeScript, and React. Please ensure to use Brave Browser as ADs can be Pornographic
 
 ## Introduction
 
