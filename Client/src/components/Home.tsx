@@ -1,21 +1,14 @@
 import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+// import { Grid } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import { useGlobalcontext } from "../contexts/GlobalProvider";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 // Types
-const h1Styles = {
-  color: "white",
-  fontSize: "16px",
-};
-
 const Home = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { animeWallpaper } = useGlobalcontext() as any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { popularAnime } = useGlobalcontext() as any;
+  const { animeWallpaper, popularAnime } = useGlobalcontext() as any;
 
   console.log(popularAnime);
   useEffect(() => {
@@ -25,14 +18,14 @@ const Home = () => {
     setLoaded(true);
   }, [animeWallpaper, popularAnime]);
 
-  useEffect(() => {
-    const time = setTimeout(() => {
-      localStorage.setItem("POPULAR_ANIME", JSON.stringify(popularAnime));
-      localStorage.setItem("ANIME_WALLPAPER", JSON.stringify(animeWallpaper));
-    }, 1000);
+  // useEffect(() => {
+  //   const time = setTimeout(() => {
+  //     localStorage.setItem("POPULAR_ANIME", JSON.stringify(popularAnime));
+  //     localStorage.setItem("ANIME_WALLPAPER", JSON.stringify(animeWallpaper));
+  //   }, 1000);
 
-    return () => clearTimeout(time);
-  }, [popularAnime, animeWallpaper]);
+  //   return () => clearTimeout(time);
+  // }, [popularAnime, animeWallpaper]);
 
   //Set Quote Render Quote and ask user if they know the character that made this quote
   const [backgroundImageState, setbackgroundImageState] = useState([]);
@@ -67,7 +60,7 @@ const Home = () => {
       ) : (
         <CircularProgress className="loader" color="secondary" />
       )}
-      <section className="Container ">
+      {/* <section className="Container ">
         <h1>Popular Anime</h1>
         <Grid
           container
@@ -94,8 +87,8 @@ const Home = () => {
                 );
               })
             : null}
-        </Grid>
-      </section>
+        </Grid> */}
+      {/* </section> */}
     </div>
   );
 };

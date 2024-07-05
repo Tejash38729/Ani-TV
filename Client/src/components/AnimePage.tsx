@@ -47,7 +47,7 @@ export default function AnimePage(): JSX.Element {
   useEffect(() => {
     convertNametoStandard(title).then((title) => {
       scrapeWebsite(
-        `${baseUrl}/${title.replace(" ", "-")}-episode-${episode}`
+        `${baseUrl}/${title.replace(" ", "-")}-episode-${1}`
         // "https://aniwatchtv.to/watch/one-piece-movie-1-3096?ep=58122"
         // "https://ryuk.to/watch/oshi-no-ko-2nd-season-episode-1"
       ).then((i) => {
@@ -88,7 +88,6 @@ export default function AnimePage(): JSX.Element {
             name="animePlayer"
             autoFocus={true}
             src={`${url}`}
-            autoFocus={true}
             frameBorder="0"
             id="videoPlayer"
           ></iframe>

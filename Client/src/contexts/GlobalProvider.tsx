@@ -9,11 +9,9 @@ type GlobalProviderProps = {
 
 // Actions
 const LOADING = "LOADING";
-const GET_POPULAR_ANIME = "GET_POPULAR_ANIME";
+const GET_ANIME_DATA = "GET_ANIME_DATA";
 // const GET_UPCOMING_ANIME = "GET_UPCOMING_ANIME";
 // const GET_AIRING_ANIME = "GET_AIRING_ANIME";
-const GET_ANIME_WALLPAPER = "GET_ANIME_WALLPAPER";
-
 // const ANIMELIST_URL = "https://api.myanimelist.net/v2";
 // const ANILIST_TOKEN = " 987e37ef681348e269dce31937b347f7";
 // X-MAL-CLIENT-ID: 987e37ef681348e269dce31937b347f7
@@ -25,7 +23,7 @@ const GET_ANIME_WALLPAPER = "GET_ANIME_WALLPAPER";
 //https://github.com/ghoshRitesh12/aniwatch-api
 // const ANILIST_URL = "https://graphql.anilist.co";
 // const BASE_URL = "https://kitsu.io/api/edge";
-const JIKAN_URL = "https://api.jikan.moe/v4";
+// const JIKAN_URL = "https://api.jikan.moe/v4";
 // const QUOTES_URL = "https://animechan.xyz/api/quotes/anime?title=one%20piece";
 // const ANIAPI = "https://api.aniapi.com/v1";
 
@@ -50,12 +48,11 @@ export default function GlobalProvider({
     switch (action.type) {
       case LOADING:
         return { ...state, loading: true };
-      case GET_POPULAR_ANIME:
-        return { ...state, popularAnime: action.payload, loading: false };
-      case GET_ANIME_WALLPAPER:
+      case GET_ANIME_DATA:
         return {
           ...state,
-          animeWallpaper: action.wallpaperPayload,
+          popularAnime: action.payload.trendingAnimes,
+          animeWallpaper: action.payload.spotlightAnimes,
           loading: false,
         };
       default:
@@ -68,76 +65,27 @@ export default function GlobalProvider({
   type ActionType = {
     type: string;
     payload?: object;
-    wallpaperPayload?: object;
   };
-  useEffect(() => {
-    getAnimeWallpaper();
-    getPopularAnime();
-  }, []);
 
-  // useEffect(() => {
-  //   const apiUrl = " https://api.myanimelist.net/v2/anime/suggestions?limit=4";
-
-  //   const headers = {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${ANILIST_TOKEN}`,
-  //   };
-
-  //   axios
-  //     .get(apiUrl, {
-  //       headers: headers,
-  //     })
-  //     .then((response) => {
-  //       // Handle successful response
-  //       console.log("Response:", response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //     });
-  // }, []);
-
-  async function getAnimeWallpaper() {
-    dispatch({ type: LOADING });
-
-    const resp = await axios.get(
-      "https://aniwatch-api-b9w3.onrender.com/anime/home"
-    );
-    const data = await resp.data;
-    console.log(data.slides);
-    dispatch({
-      ...state,
-      type: GET_ANIME_WALLPAPER,
-      wallpaperPayload: data.spotlightAnimes,
-    });
-  }
-
-  async function getPopularAnime() {
+  async function getAnimeData() {
     dispatch({ type: LOADING });
     const response = await axios.get(
-      `${JIKAN_URL}/top/anime?filter=bypopularity`
+      "https://aniwatch-api-b9w3.onrender.com/anime/home"
     );
     const data = await response.data;
-    dispatch({ ...state, type: GET_POPULAR_ANIME, payload: data.data });
+    console.log(data);
+    dispatch({ ...state, type: GET_ANIME_DATA, payload: data });
   }
-
   useEffect(() => {
-    const content = localStorage.getItem("POPULAR_ANIME");
-    const WallpaperContent = localStorage.getItem("ANIME_WALLPAPER");
-
-    if (content || WallpaperContent) {
-      if (content) {
-        dispatch({ type: GET_POPULAR_ANIME, payload: JSON.parse(content) });
-      } else {
-        getPopularAnime();
-      }
-      if (WallpaperContent) {
-        dispatch({
-          type: GET_ANIME_WALLPAPER,
-          wallpaperPayload: JSON.parse(WallpaperContent),
-        });
-      } else {
-        getAnimeWallpaper();
-      }
+    const AnimeData = localStorage.getItem("ANIME_Data");
+    if (AnimeData) {
+      dispatch({
+        ...state,
+        type: GET_ANIME_DATA,
+        payload: JSON.parse(AnimeData),
+      });
+    } else {
+      getAnimeData();
     }
   }, []);
 

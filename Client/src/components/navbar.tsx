@@ -1,5 +1,4 @@
 import Stack from "@mui/material/Stack";
-import { Search } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // import { useGlobalcontext } from "../contexts/GlobalProvider";
@@ -22,7 +21,7 @@ const Navbar = () => {
 
       <Stack direction="row" spacing={2}>
         <input
-          type="search"
+          type="text"
           className="search-bar"
           placeholder="Enter Anime Name"
           value={value}
@@ -30,8 +29,9 @@ const Navbar = () => {
             setValue(e.target.value);
           }}
         />
-
-        <Search className="Searchbutton" />
+        <button className="p-2 bg-secondary text-secondary-foreground rounded-md Searchbutton">
+          🔍
+        </button>
       </Stack>
     </nav>
   );
