@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import scrapeWebsite from "../scrappers/Scapper";
 import { useParams } from "react-router-dom";
 import { Frown } from "lucide-react";
-
+import { WebExtensionBlocker } from "@cliqz/adblocker-webextension";
+import { browser } from "webextension-polyfill-ts";
 //TODO Search Functionality
 //Episode Functionality
 //https://embtaku.pro/download?id=MjE5Njg5&title=One+Piece+Episode+1092
@@ -21,7 +22,13 @@ export default function AnimePage(): JSX.Element {
   const [currentAnime, setCurrentAnime] = useState();
   const { title } = useParams();
   const { popularAnime } = useGlobalcontext();
-  console.log(popularAnime);
+
+  useEffect(() => {
+    // WebExtensionBlocker.fromPrebuiltAdsAndTracking().then((blocker) => {
+    //   blocker.enableBlockingInBrowser(browser);
+    // });
+  }, []);
+
   useEffect(() => {
     const curr = popularAnime.filter((anime) => {
       return anime.mal_id == mal_id;
@@ -47,9 +54,8 @@ export default function AnimePage(): JSX.Element {
   useEffect(() => {
     convertNametoStandard(title).then((title) => {
       scrapeWebsite(
-        `${baseUrl}/${title.replace(" ", "-")}-episode-${1}`
-        // "https://aniwatchtv.to/watch/one-piece-movie-1-3096?ep=58122"
-        // "https://ryuk.to/watch/oshi-no-ko-2nd-season-episode-1"
+        `${baseUrl}/${title.replace(" ", "-")}-episode-${episode}`
+        // "https://hianime.to/watch/one-piece-100?ep=2142"
       ).then((i) => {
         setUrl(i);
       });

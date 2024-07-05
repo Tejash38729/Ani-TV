@@ -133,7 +133,6 @@ export default function HomePage() {
               </div>
             </div>
           </section> */}
-          //Trending
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4 text-white">TRENDING</h2>
             <Grid
