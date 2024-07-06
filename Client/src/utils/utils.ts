@@ -12,4 +12,9 @@ export async function fetchAnimeInfo(id: string ){
 	return data 
 }
 
+export async function SearchAnime(name: string ){
+	//https://api-aniwatch.onrender.com/anime/search/suggest?q={query}:w
+	
+}
+
 
