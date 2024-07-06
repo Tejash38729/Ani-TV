@@ -1,12 +1,11 @@
 import { Container } from "@mui/material";
 import "../App.css";
+import axios from "axios";
 import { useGlobalcontext } from "../contexts/GlobalProvider";
 import { useEffect, useState } from "react";
 import scrapeWebsite from "../scrappers/Scapper";
 import { useParams } from "react-router-dom";
 import { Frown } from "lucide-react";
-import { WebExtensionBlocker } from "@cliqz/adblocker-webextension";
-import { browser } from "webextension-polyfill-ts";
 //TODO Search Functionality
 //Episode Functionality
 //https://embtaku.pro/download?id=MjE5Njg5&title=One+Piece+Episode+1092
@@ -23,13 +22,12 @@ export default function AnimePage(): JSX.Element {
   const { title } = useParams();
   const { popularAnime } = useGlobalcontext();
 
-  useEffect(() => {
-    // WebExtensionBlocker.fromPrebuiltAdsAndTracking().then((blocker) => {
-    //   blocker.enableBlockingInBrowser(browser);
-    // });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("");
+  // }, []);
 
   useEffect(() => {
+    console.log(popularAnime);
     const curr = popularAnime.filter((anime) => {
       return anime.mal_id == mal_id;
     });

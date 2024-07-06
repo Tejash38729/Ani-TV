@@ -21,8 +21,6 @@ export default function HomePage() {
     setAnime(animeWallpaper);
     setAnimeData(popularAnime);
     setLoaded(true);
-    console.log("AnimeWallpaper", Anime);
-    console.log("Popular Anime", Animedata);
   }, [animeWallpaper, popularAnime]);
   return (
     <>
