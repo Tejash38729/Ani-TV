@@ -3,12 +3,15 @@ import { useGlobalcontext } from "../contexts/GlobalProvider";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Grid } from "@mui/material";
+import { globalcontextType } from "../utils/utils";
 
 export default function HomePage() {
   const [Anime, setAnime] = useState([]);
   const [loaded, setLoaded] = useState<boolean>();
-  const [Animedata, setAnimeData] = useState();
-  const { animeWallpaper, popularAnime } = useGlobalcontext() as any;
+  const [Animedata, setAnimeData] = useState([]);
+  const { animeWallpaper, popularAnime } =
+    useGlobalcontext() as globalcontextType;
+
   useEffect(() => {
     const time = setTimeout(() => {
       localStorage.setItem("POPULAR_ANIME", JSON.stringify(Animedata));
@@ -17,11 +20,13 @@ export default function HomePage() {
 
     return () => clearTimeout(time);
   }, [Anime, Animedata]);
+
   useEffect(() => {
     setAnime(animeWallpaper);
     setAnimeData(popularAnime);
     setLoaded(true);
   }, [animeWallpaper, popularAnime]);
+
   return (
     <>
       <div className="bg-background text-foreground min-h-screen">
@@ -140,7 +145,6 @@ export default function HomePage() {
               marginTop={5}
               justifyContent="center"
             >
-              {" "}
               {Anime
                 ? Anime.map((anime, i) => {
                     return (
@@ -172,9 +176,10 @@ export default function HomePage() {
                       <Link
                         to={`/${anime.id}/${encodeURIComponent(anime.name)}`}
                       >
-                        <div className="relative">
+                        <div key={i} className="relative">
                           <img
                             src={anime.poster}
+                            key={i}
                             alt="Top Airing 1"
                             className="w-full h-full object-cover rounded-lg AnimeImages"
                           />

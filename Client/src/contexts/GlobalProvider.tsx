@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import React, { createContext, useContext, useEffect, useReducer } from "react";
 import axios from "axios";
 
 export const GlobalContext = createContext<object>({});
@@ -73,20 +73,21 @@ export default function GlobalProvider({
       "https://aniwatch-api-b9w3.onrender.com/anime/home"
     );
     const data = await response.data;
-    console.log(data);
+
     dispatch({ ...state, type: GET_ANIME_DATA, payload: data });
   }
+
   useEffect(() => {
     const AnimeData = localStorage.getItem("ANIME_Data");
-    if (AnimeData) {
+    if (AnimeData !== null) {
       dispatch({
         ...state,
         type: GET_ANIME_DATA,
         payload: JSON.parse(AnimeData),
       });
-    } else {
-      getAnimeData();
+      return () => {};
     }
+    getAnimeData();
   }, []);
 
   return (

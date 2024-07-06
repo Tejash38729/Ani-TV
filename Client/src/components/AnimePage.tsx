@@ -1,11 +1,13 @@
 import { Container } from "@mui/material";
 import "../App.css";
-import axios from "axios";
 import { useGlobalcontext } from "../contexts/GlobalProvider";
 import { useEffect, useState } from "react";
 import scrapeWebsite from "../scrappers/Scapper";
 import { useParams } from "react-router-dom";
 import { Frown } from "lucide-react";
+import { fetchAnimeInfo } from "../utils/utils";
+import React from "react";
+
 //TODO Search Functionality
 //Episode Functionality
 //https://embtaku.pro/download?id=MjE5Njg5&title=One+Piece+Episode+1092
@@ -21,13 +23,16 @@ export default function AnimePage(): JSX.Element {
   const [currentAnime, setCurrentAnime] = useState();
   const { title } = useParams();
   const { popularAnime } = useGlobalcontext();
-
-  // useEffect(() => {
-  //   axios.get("");
-  // }, []);
+  const { anime_id } = useParams();
+  const [animeInfo, setAnimeInfo] = useState();
 
   useEffect(() => {
-    console.log(popularAnime);
+    fetchAnimeInfo(anime_id).then((animeInfo) => setAnimeInfo(animeInfo));
+    console.log("Anime info", animeInfo?.anime);
+    return () => {};
+  }, [anime_id, animeInfo]);
+
+  useEffect(() => {
     const curr = popularAnime.filter((anime) => {
       return anime.mal_id == mal_id;
     });
@@ -78,12 +83,18 @@ export default function AnimePage(): JSX.Element {
   return (
     <Container>
       <section className="AnimePage_main_section">
-        {/* <h1>Anime Page</h1>
-        <h1></h1> */}
-        <h1>Currently Watching: {currentAnime?.title} </h1>
+        <br />
+
         <br />
         <br />
+        <h1 className="text-white">
+          Currently Watching:{" "}
+          <strong className="text-red-700">
+            {animeInfo?.anime?.info?.name}
+          </strong>{" "}
+        </h1>
         <br />
+
         <br />
         {url !== undefined ? (
           <iframe
@@ -112,36 +123,41 @@ export default function AnimePage(): JSX.Element {
             <br />
             <br />
             <br />
-            <br />
-            <br />
           </div>
         )}
-        <br />
-        <br />
-        <br />
-        <br />
       </section>
       <section className="AnimePage_main_section">
+        <h1>About</h1>
+        <img src={animeInfo?.anime?.info?.poster} alt="AnimeInfoImage" />
+        <br />
+        <p className="text-white">{animeInfo?.anime?.info?.description}</p>
+        <br />
         <h1 className="AnimePage_main_section_h1">
-          There are {currentAnime && currentAnime.episodes} episodes
+          There are {animeInfo && animeInfo?.anime?.info?.stats?.episodes?.sub}{" "}
+          episodes
         </h1>
         <h2>Currently on Episode {episode}...</h2>
         {currentAnime && (
           <ul className="AnimePage_main_section_ul">
-            {[...Array(currentAnime.episodes).keys()].map((episodeNumber) => (
-              <li className="AnimePage_main_section_li" key={episodeNumber + 1}>
-                <button
-                  className="EpisodeButton"
-                  onClick={() => {
-                    let cur = episodeNumber + 1;
-                    setEpisode(cur);
-                    window.location.reload();
-                  }}
+            {[...Array(animeInfo?.anime?.info?.stats?.episodes?.sub)].map(
+              (_, episodeNumber) => (
+                <li
+                  className="AnimePage_main_section_li"
+                  key={episodeNumber + 1}
                 >
-                  Episode {episodeNumber + 1}
-                </button>
-              </li>
-            ))}
+                  <button
+                    className="EpisodeButton"
+                    onClick={() => {
+                      const cur = episodeNumber + 1;
+                      setEpisode(cur);
+                      window.location.reload();
+                    }}
+                  >
+                    Episode {episodeNumber + 1}
+                  </button>
+                </li>
+              )
+            )}
           </ul>
         )}
       </section>

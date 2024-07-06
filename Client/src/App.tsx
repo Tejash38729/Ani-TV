@@ -16,10 +16,11 @@ function App() {
           <Routes>
             <Route path="*" element={<NotFound />}></Route>
             <Route path="" element={<HomePage />}></Route>
-            <Route path="/:mal_id/:title" element={<AnimePage />}></Route>
+            <Route path="/:anime_id/:title" element={<AnimePage />}></Route>
             <Route path="/" element={<HomePage />}></Route>
           </Routes>
         </GlobalProvider>
+        <footer className="bg-red-600 w-full"></footer>
       </main>
     </Router>
   );

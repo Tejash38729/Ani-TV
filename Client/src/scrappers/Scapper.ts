@@ -2,7 +2,6 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 
 export default async function scrapeWebsite(url: string) {
-
 try {
     const response = await axios.get(url);
     if (response.status === 404) return
@@ -18,7 +17,6 @@ try {
     } catch (error) {
         console.error('Error:', error);
     }
-
 }
 
 
