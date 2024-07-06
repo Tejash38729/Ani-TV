@@ -84,7 +84,6 @@ export default function AnimePage(): JSX.Element {
     <Container>
       <section className="AnimePage_main_section">
         <br />
-
         <br />
         <br />
         <h1 className="text-white">
@@ -110,7 +109,7 @@ export default function AnimePage(): JSX.Element {
           <div>
             {" "}
             <Frown />
-            <h1>Not Found....</h1>
+            <h1 className="text-red-700">Not Found :( ...</h1>
             <br />
             <br />
             <br />
